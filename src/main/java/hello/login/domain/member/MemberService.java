@@ -2,7 +2,6 @@ package hello.login.domain.member;
 
 
 import hello.login.web.dto.RegisterMemberDto;
-import hello.login.web.dto.ViewMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,16 +1,9 @@
 package hello.login.web.member;
 
-import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberService;
 import hello.login.web.dto.RegisterMemberDto;
-import hello.login.web.dto.ViewMemberDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

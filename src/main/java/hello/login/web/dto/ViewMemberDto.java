@@ -14,11 +14,10 @@ public class ViewMemberDto {
     private Long id;
     private String userId;
     private String userName;
-    private String password;
 
     public ViewMemberDto createViewMemberDto(Member member) {
-        return ViewMemberDto.builder().id(this.id).userId(this.userId)
-                .userName(this.userName).password(this.password).build();
+        return ViewMemberDto.builder().id(member.getId()).userId(member.getUserId())
+                .userName(member.getUserName()).build();
     }
 
 }
