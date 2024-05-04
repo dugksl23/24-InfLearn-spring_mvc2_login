@@ -5,12 +5,14 @@ import hello.login.web.dto.RegisterMemberDto;
 import hello.login.web.dto.ViewMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -24,6 +26,7 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+    @Transactional
     public Long addMember(RegisterMemberDto member) {
         Member memberEntity = member.createMemberEntity();
         return memberRepository.save(memberEntity).getId();

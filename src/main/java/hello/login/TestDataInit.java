@@ -27,8 +27,8 @@ public class TestDataInit {
         itemRepository.save(new Item("itemA", 10000, 10));
         itemRepository.save(new Item("itemB", 20000, 20));
         RegisterMemberDto build = RegisterMemberDto.builder()
-                .userId("user1")
-                .userName("yohan")
+                .userId("user")
+                .userName("user")
                 .password("1234").build();
         Long l = memberService.addMember(build);
         Member byId = memberService.findById(l);
