@@ -1,15 +1,16 @@
-package hello.login.domain.dto;
+package hello.login.web.dto;
 
+import hello.login.domain.member.Member;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class registerMemberDto {
+public class RegisterMemberDto {
 
     @NotBlank
     private String userId;
@@ -17,4 +18,9 @@ public class registerMemberDto {
     private String password;
     @NotBlank
     private String userName;
+
+    public Member createMemberEntity() {
+        return Member.builder().userId(this.userId).password(this.password).userName(this.userName).build();
+    }
+
 }
