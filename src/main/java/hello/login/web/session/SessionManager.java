@@ -88,6 +88,8 @@ public class SessionManager {
         Cookie sessionId = getCookieSessionId(request);
         if (sessionId != null) {
             sessionMap.remove(sessionId.getValue());
+            // uuid로 인해 sessionId 값이 로그인 때마다 바뀌기 때문에
+            // 해당 값을 벼별도 쿠키 삭제 로직은 필요없다.
         }
     }
 

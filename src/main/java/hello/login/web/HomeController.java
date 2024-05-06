@@ -1,5 +1,6 @@
 package hello.login.web;
 
+import hello.login.domain.login.LoginService;
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
 import hello.login.web.dto.ViewMemberDto;
@@ -25,6 +26,7 @@ public class HomeController {
 
     private final MemberRepository memberRepository;
     private final SessionManager sessionManager;
+    private final LoginService loginService;
 
     //    @GetMapping("/")
     public String home() {
