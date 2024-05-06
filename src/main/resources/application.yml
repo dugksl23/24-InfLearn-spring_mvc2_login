@@ -7,7 +7,10 @@
 #spring.thymeleaf.cache=false
 #spring.thymeleaf.prefix=classpath:/templates/
 #
-
+server:
+  servlet:
+    session:
+      tracking-modes=cookie: cookie
 
 spring:
 
@@ -35,3 +38,4 @@ logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type: trace
   #?? ??? ????? ??? ?? ????? ??? ???.
+

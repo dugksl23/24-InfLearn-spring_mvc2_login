@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +69,7 @@ public class HomeController {
 
     }
 
-    @GetMapping("/")
+    //    @GetMapping("/")
     public String homeLoginV3(HttpServletRequest request, Model model) {
         /**
          * request.getSession(false);
@@ -90,5 +91,27 @@ public class HomeController {
         return "/member/loginHome";
 
     }
+
+    @GetMapping("/")
+    public String homeLoginV4(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model) {
+        /**
+         * request.getSession(false);
+         * @false : 단순 방문일 경우에는 Session 생성을 하지 않도록 하기에 -> false
+         */
+        if (loginMember == null) {
+            return "home";
+        }
+
+        // 로그인했을 시에, 해당 view에
+        if (loginMember == null) {
+            return "home";
+        }
+
+        ViewMemberDto viewMemberDto = new ViewMemberDto().createViewMemberDto(loginMember);
+        model.addAttribute("member", viewMemberDto);
+        return "/member/loginHome";
+
+    }
+
 
 }
