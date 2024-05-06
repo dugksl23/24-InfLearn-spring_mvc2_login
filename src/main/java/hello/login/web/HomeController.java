@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,8 +53,8 @@ public class HomeController {
 
     }
 
-    @GetMapping("/")
-    public String homeLoginBySession(HttpServletRequest request, Model model) {
+    //    @GetMapping("/")
+    public String homeLoginV2(HttpServletRequest request, Model model) {
 
         Member member = (Member) sessionManager.getSession(request);
         if (member == null) {
@@ -61,6 +62,29 @@ public class HomeController {
         }
 
         // 로그인했을 시에, 해당 view에
+        ViewMemberDto viewMemberDto = new ViewMemberDto().createViewMemberDto(member);
+        model.addAttribute("member", viewMemberDto);
+        return "/member/loginHome";
+
+    }
+
+    @GetMapping("/")
+    public String homeLoginV3(HttpServletRequest request, Model model) {
+        /**
+         * request.getSession(false);
+         * @false : 단순 방문일 경우에는 Session 생성을 하지 않도록 하기에 -> false
+         */
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return "home";
+        }
+
+        // 로그인했을 시에, 해당 view에
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        if (member == null) {
+            return "home";
+        }
+
         ViewMemberDto viewMemberDto = new ViewMemberDto().createViewMemberDto(member);
         model.addAttribute("member", viewMemberDto);
         return "/member/loginHome";

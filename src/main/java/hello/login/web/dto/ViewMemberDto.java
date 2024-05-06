@@ -16,7 +16,7 @@ public class ViewMemberDto {
     private String userName;
 
     public ViewMemberDto createViewMemberDto(Member member) {
-        return ViewMemberDto.builder().id(member.getId()).userId(member.getUserId())
+        return  ViewMemberDto.builder().id(member.getId()).userId(member.getUserId())
                 .userName(member.getUserName()).build();
     }
 
