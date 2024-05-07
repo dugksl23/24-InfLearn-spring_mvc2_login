@@ -93,16 +93,11 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String homeLoginV4(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model) {
+    public String homeLoginV4(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         /**
          * request.getSession(false);
          * @false : 단순 방문일 경우에는 Session 생성을 하지 않도록 하기에 -> false
          */
-        if (loginMember == null) {
-            return "home";
-        }
-
-        // 로그인했을 시에, 해당 view에
         if (loginMember == null) {
             return "home";
         }

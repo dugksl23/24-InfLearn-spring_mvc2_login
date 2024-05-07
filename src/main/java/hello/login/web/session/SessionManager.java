@@ -49,7 +49,7 @@ public class SessionManager {
         // Cookie key = value(session key/uuid) = value (sessionValue/member id)
     }
 
-
+    // session 에 uuid 가 있는 지 확인 - 인증된 유저인지 확인하는 로직
     public Object getSession(HttpServletRequest request) {
         Cookie cookie = getCookieSessionId(request);
         if (cookie == null) {
