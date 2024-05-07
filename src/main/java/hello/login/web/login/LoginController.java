@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.filter.RequestContextFilter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -85,7 +86,7 @@ public class LoginController {
         return "redirect:/";
     }
 
-    @PostMapping("/login")
+    //    @PostMapping("/login")
     public String loginV3(@Validated @ModelAttribute("loginForm") LoginMemberDto member, BindingResult bindingResult, Model model, HttpServletRequest request, HttpServletResponse response) {
 
         if (bindingResult.hasErrors()) {
@@ -113,6 +114,37 @@ public class LoginController {
         ViewMemberDto viewMemberDto = new ViewMemberDto().createViewMemberDto(login);
         model.addAttribute("member", viewMemberDto);
         return "redirect:/";
+    }
+
+    @PostMapping("/login")
+    public String loginV4(@Validated @ModelAttribute("loginForm") LoginMemberDto member, BindingResult bindingResult, @RequestParam(name = "redirectURL", defaultValue = "/") String requestURL, Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        if (bindingResult.hasErrors()) {
+            return "/member/login";
+        }
+
+        Member login = loginService.login(member);
+        if (login == null) {
+            bindingResult.reject("loginFail");
+            return "member/login";
+            // reject 는 Global Error
+            // rejectValue 는 Field Error
+        }
+
+        model.addAttribute(SessionConst.LOGIN_MEMBER, login);
+
+        /**
+         * Session　생성 TODO
+         * @TRUE = default 가 true 이며, 기존 Session 을 반환 혹은 없으면 새로 생성
+         * @false = 기존 session 반환 혹은 없으면 null 반환
+         */
+        request.getSession(true).setAttribute(SessionConst.LOGIN_MEMBER, login);
+        session.setAttribute(SessionConst.LOGIN_MEMBER, login);
+
+        ViewMemberDto viewMemberDto = new ViewMemberDto().createViewMemberDto(login);
+        model.addAttribute("member", viewMemberDto);
+        log.info("redirect URL : {}", requestURL);
+        return "redirect:" + requestURL;
     }
 
 

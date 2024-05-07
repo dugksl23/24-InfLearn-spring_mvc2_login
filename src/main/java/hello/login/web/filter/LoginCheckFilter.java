@@ -32,18 +32,20 @@ public class LoginCheckFilter implements Filter {
 
             /**
              * if(isLoginCheckPath(requestURI))
-             * @return true ==　로그인 된 사람
+             * @return true ==　회원 페이지를 접근한 URL
              */
             if (isLoginCheckPath(requestURI)) {
                 log.info(" 2. 인증된 URL 의 로그인 체크 로직 실행 {} : ", requestURI);
+                // home은 애초에 모두 접근 가능하기에 로그인된 사람이 home으로 가더라도 타지 않는다.
                 // 해당 url 은 get queryString으로 접근 가능하기에 2차적으로 로그인 여부 확인해야 한다.
                 HttpSession session = request.getSession(false);
-
+                log.info("현재 page: {} ", requestURI);
                 if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
-                    log.info("미인증 사용자 요청 {}", requestURI);
+                    log.info("미인증 사용자 요청 : {}", requestURI);
 //                    response.sendRedirect("/");
-                    response.sendRedirect("/login?redirectURL= " + requestURI); //로그인 성공후 items 페이지로 이동
-                    return;
+
+                    response.sendRedirect("/login?redirectURL=" + requestURI); //로그인으로 redirect
+                    return; //여기가 중요, 미인증 사용자는 다음으로 진행하지 않고 끝!
                 }
             }
 
@@ -53,9 +55,8 @@ public class LoginCheckFilter implements Filter {
             throw e;
             // 예외 로깅 가능 하지만, 톰캣까지 에외를 보내주어야 한다.
         } finally {
-            log.info("인증 체크 필터 종료 {} : ", requestURI);
+            log.info("인증 체크 필터 종료 : {}", requestURI);
         }
-
 
 
     }
@@ -68,7 +69,7 @@ public class LoginCheckFilter implements Filter {
      */
     private boolean isLoginCheckPath(String requestUri) {
         return !PatternMatchUtils.simpleMatch(whiteList, requestUri);
-        // 화이트 리스트에 해당하지 않은 URL   -> (로그인 한 사람)
+        // -> 로그인 되어 접근 가능한 URL
     }
 
 }
