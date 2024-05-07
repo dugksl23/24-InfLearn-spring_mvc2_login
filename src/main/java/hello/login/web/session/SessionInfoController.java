@@ -1,7 +1,6 @@
 package hello.login.web.session;
 
 import hello.login.domain.member.Member;
-import hello.login.domain.member.QMember;
 import hello.login.web.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

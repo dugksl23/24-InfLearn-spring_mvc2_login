@@ -1,14 +1,18 @@
 package hello.login;
 
 
+import hello.login.web.argumentResolver.LoginMemberArgumentResolver;
 import hello.login.web.filter.LogFilter;
 import hello.login.web.filter.LoginCheckFilter;
 import hello.login.web.interceptor.LogInterceptor;
 import hello.login.web.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -54,5 +58,12 @@ public class WebConfig implements WebMvcConfigurer {
         // 유지보수를 위해서 whiteList 에 url 을 추가하는 것이 정책이 적절하다.
         filter.setOrder(2);
         return filter;
+    }
+
+    // ArgumentsResolver 추가
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
+        resolvers.add(new LoginMemberArgumentResolver());
     }
 }

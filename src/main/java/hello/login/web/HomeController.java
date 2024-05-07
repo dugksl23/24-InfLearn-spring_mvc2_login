@@ -3,6 +3,7 @@ package hello.login.web;
 import hello.login.domain.login.LoginService;
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
+import hello.login.web.argumentResolver.Login;
 import hello.login.web.dto.ViewMemberDto;
 import hello.login.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
@@ -92,8 +93,24 @@ public class HomeController {
 
     }
 
-    @GetMapping("/")
+    //    @GetMapping("/")
     public String homeLoginV4(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+        /**
+         * request.getSession(false);
+         * @false : 단순 방문일 경우에는 Session 생성을 하지 않도록 하기에 -> false
+         */
+        if (loginMember == null) {
+            return "home";
+        }
+
+        ViewMemberDto viewMemberDto = new ViewMemberDto().createViewMemberDto(loginMember);
+        model.addAttribute("member", viewMemberDto);
+        return "/member/loginHome";
+
+    }
+
+    @GetMapping("/")
+    public String homeLoginV5(@Login Member loginMember, Model model) {
         /**
          * request.getSession(false);
          * @false : 단순 방문일 경우에는 Session 생성을 하지 않도록 하기에 -> false
