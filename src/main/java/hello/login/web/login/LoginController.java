@@ -143,7 +143,7 @@ public class LoginController {
 
         ViewMemberDto viewMemberDto = new ViewMemberDto().createViewMemberDto(login);
         model.addAttribute("member", viewMemberDto);
-        log.info("redirect URL : {}", requestURL);
+        log.info("Controller redirect URL : {}", requestURL);
         return "redirect:" + requestURL;
     }
 
