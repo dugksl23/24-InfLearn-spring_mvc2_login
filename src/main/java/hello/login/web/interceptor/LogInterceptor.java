@@ -33,6 +33,7 @@ public class LogInterceptor implements HandlerInterceptor {
         // 정적 리소스 : ResourceHttpRequestHandler
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
+            log.info("handlerMethod: {}", handlerMethod);
         }
 
         log.info("preHandle request : [{}][{}][{}] : ", logId, requestURI, handler);
