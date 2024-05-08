@@ -65,5 +65,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         WebMvcConfigurer.super.addArgumentResolvers(resolvers);
         resolvers.add(new LoginMemberArgumentResolver());
+        resolvers.add(new LoginMemberArgumentResolver());
     }
 }

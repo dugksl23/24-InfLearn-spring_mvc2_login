@@ -3,23 +3,20 @@ package hello.login.web;
 import hello.login.domain.login.LoginService;
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
+import hello.login.domain.member.MemberService;
 import hello.login.web.argumentResolver.Login;
 import hello.login.web.dto.ViewMemberDto;
 import hello.login.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -30,6 +27,7 @@ public class HomeController {
     private final MemberRepository memberRepository;
     private final SessionManager sessionManager;
     private final LoginService loginService;
+    private final MemberService memberService;
 
     //    @GetMapping("/")
     public String home() {
@@ -110,7 +108,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String homeLoginV5(@Login Member loginMember, Model model) {
+    public String homeLoginV5ArgumentResolver(@Login Member loginMember, Model model) {
         /**
          * request.getSession(false);
          * @false : 단순 방문일 경우에는 Session 생성을 하지 않도록 하기에 -> false
